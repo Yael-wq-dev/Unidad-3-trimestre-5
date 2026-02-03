@@ -1,0 +1,27 @@
+body {
+    background-color: rgb(39, 61, 0);
+    color: black;
+    font-size: 50px;
+}
+
+h1{
+    color: grey;
+}
+
+p{
+    color: azure;
+}
+
+div{
+    background-color: black;
+    padding: 50px;
+    border-style: dotted;
+    border-width: 10px;
+    border-color: cadetblue;
+    margin: 150px;
+    border-radius: 20px;
+}
+
+img {
+  border-radius: 50px;
+}
