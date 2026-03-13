@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Manifiesto del Arte Basura</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+
+<style>
+body{
+margin:0;
+background:#0a0a0a;
+overflow:hidden;
+font-family:"Courier New", monospace;
+}
+canvas{display:block;}
+</style>
+</head>
+
+<body>
+
+<script>
+
+let trash = {x:0,y:0,w:90,h:110,hover:false};
+
+let particles=[];
+let stars=[];
+
+let card=null;
+let cardAlpha=0;
+let cardScale=0;
+
+let pulseAnim=0;
+let isShaking=false;
+let shakeTimer=0;
+
+let images=[
+{symbol:"👁",label:"Ojo que todo lo ve",color:[255,80,80]},
+{symbol:"♥",label:"Corazón roto",color:[255,60,120]},
+{symbol:"◎",label:"Espiral",color:[80,200,255]},
+{symbol:"✦",label:"Estrella muerta",color:[255,220,50]},
+{symbol:"●",label:"El punto original",color:[255,255,255]}
+];
+
+let manifesto=[
+ "MANIFIESTO",
+  "DEL ARTE BASURA",
+  "─────────────────",
+  "Todo lo desechado",
+  "tiene un alma.",
+  "",
+  "La basura no miente.",
+  "El arte oficial sí.",
+  "",
+  "Rescata lo olvidado.",
+  "Hazlo brillar.",
+  "Tíralo de nuevo.",
+  "",
+  "El ciclo es el punto.",
+  "",
+  "La belleza vive",
+  "en lo que nadie",
+  "quiso guardar.",
+  "─────────────────",
+  "↓ Haz clic en el",
+  "  bote de basura ↓"
+];
+
+function setup(){
+
+createCanvas(windowWidth,windowHeight);
+textFont("Courier New");
+
+trash.x=width*0.72;
+trash.y=height*0.6;
+
+for(let i=0;i<80;i++){
+stars.push({
+x:random(width),
+y:random(height),
+r:random(1,2)
+});
+}
+
+}
+
+function draw(){
+
+background(10,10,15,40);
+
+pulseAnim+=0.03;
+
+drawStars();
+drawManifiesto();
+drawTrashCan();
+drawParticles();
+drawCard();
+
+if(isShaking){
+shakeTimer--;
+if(shakeTimer<=0){
+isShaking=false;
+}
+}
+
+}
+
+function drawStars(){
+
+noStroke();
+fill(200);
+
+for(let s of stars){
+ellipse(s.x,s.y,s.r);
+}
+
+stroke(70);
+line(width*0.55,40,width*0.55,height-40);
+
+}
+
+function drawManifiesto(){
+
+let centerX=width*0.27;
+let startY=height*0.15;
+let lineH=28;
+
+textAlign(CENTER);
+
+for(let i=0;i<manifesto.length;i++){
+
+let line=manifesto[i];
+
+if(i==0){
+fill(255,80,80);
+textSize(32);
+textStyle(BOLD);
+}
+else if(i==1){
+fill(200,80,80);
+textSize(24);
+textStyle(ITALIC);
+}
+else{
+fill(200);
+textSize(20);
+textStyle(NORMAL);
+}
+
+text(line,centerX,startY+i*lineH);
+
+}
+
+textAlign(LEFT);
+textStyle(NORMAL);
+
+}
+
+function drawTrashCan(){
+
+let t=trash;
+let mx=mouseX,my=mouseY;
+
+t.hover=(mx>t.x-t.w/2-10 && mx<t.x+t.w/2+10 &&
+         my>t.y-t.h/2-20 && my<t.y+t.h/2+10);
+
+push();
+
+let sx=isShaking?random(-6,6):0;
+let sy=isShaking?random(-3,3):0;
+
+translate(t.x+sx,t.y+sy);
+
+let sc=t.hover?1.08+sin(pulseAnim*3)*0.02:1;
+scale(sc);
+
+noStroke();
+fill(0,0,0,60);
+ellipse(0,t.h/2+10,t.w*1.2,20);
+
+let bw=t.w;
+let bh=t.h;
+let topW=bw*0.85;
+let botW=bw;
+
+let metalBright=t.hover?180:140;
+let stripeColor=t.hover?color(100,255,100,200):color(80,200,80,150);
+
+fill(metalBright);
+stroke(80);
+strokeWeight(2);
+
+beginShape();
+vertex(-topW/2,-bh/2+10);
+vertex(topW/2,-bh/2+10);
+vertex(botW/2,bh/2);
+vertex(-botW/2,bh/2);
+endShape(CLOSE);
+
+stroke(100,100,100,100);
+strokeWeight(1.5);
+
+for(let i=-1;i<=1;i++){
+let px=i*(bw*0.28);
+line(px,-bh/2+14,px+i*4,bh/2-4);
+}
+
+noStroke();
+fill(stripeColor);
+rect(-topW/2+4,0,topW-8,14,3);
+
+fill(30,30,30,180);
+textSize(20);
+textAlign(CENTER,CENTER);
+textStyle(BOLD);
+text("♻",0,7);
+
+let lidOffset=isShaking?random(-3,3):(t.hover?-8+sin(pulseAnim*4)*3:0);
+
+fill(160);
+stroke(80);
+strokeWeight(2);
+rect(-topW/2-4,-bh/2-10+lidOffset,topW+8,14,4);
+
+fill(120);
+noStroke();
+rect(-8,-bh/2-18+lidOffset,16,10,3);
+
+if(t.hover){
+noFill();
+for(let g=4;g>0;g--){
+stroke(100,255,100,15*g);
+strokeWeight(g*3);
+rect(-botW/2-4,-bh/2,botW+8,bh+4,6);
+}
+}
+
+pop();
+
+textAlign(CENTER);
+textSize(13);
+fill(t.hover?color(100,255,100):color(150));
+noStroke();
+textStyle(t.hover?BOLD:NORMAL);
+text(t.hover?"¡CLICK para sacar!":"bote de arte",t.x,t.y+t.h/2+28);
+
+textStyle(NORMAL);
+
+}
+
+function drawParticles(){
+
+for(let i=particles.length-1;i>=0;i--){
+
+let p=particles[i];
+
+p.x+=p.vx;
+p.y+=p.vy;
+p.vy+=0.15;
+p.life-=4;
+
+noStroke();
+fill(200,p.life);
+
+ellipse(p.x,p.y,6);
+
+if(p.life<=0){
+particles.splice(i,1);
+}
+
+}
+
+}
+
+function drawCard(){
+
+if(!card) return;
+
+cardAlpha=lerp(cardAlpha,255,0.1);
+cardScale=lerp(cardScale,1,0.1);
+
+push();
+
+translate(width*0.72,height*0.25);
+scale(cardScale);
+
+fill(30,cardAlpha);
+stroke(card.color);
+rect(-100,-100,200,200,10);
+
+fill(card.color);
+noStroke();
+textAlign(CENTER,CENTER);
+textSize(70);
+text(card.symbol,0,-10);
+
+fill(255,cardAlpha);
+textSize(14);
+text(card.label,0,70);
+
+pop();
+
+}
+
+function mousePressed(){
+
+let dx=mouseX-trash.x;
+let dy=mouseY-trash.y;
+
+if(abs(dx)<trash.w/2 && abs(dy)<trash.h/2){
+
+card=random(images);
+cardAlpha=0;
+cardScale=0.5;
+
+for(let i=0;i<20;i++){
+particles.push({
+x:trash.x,
+y:trash.y,
+vx:random(-3,3),
+vy:random(-6,-2),
+life:255
+});
+}
+
+isShaking=true;
+shakeTimer=15;
+
+}
+
+}
+
+function windowResized(){
+
+resizeCanvas(windowWidth,windowHeight);
+
+trash.x=width*0.72;
+trash.y=height*0.6;
+
+}
+
+</script>
+
+</body>
+</html>

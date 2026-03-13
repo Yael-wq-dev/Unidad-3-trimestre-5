@@ -1,0 +1,19 @@
+body{
+    background-color: #b30000;
+    color: black;
+    font-size: 80px;
+}
+
+p{
+    color: whitesmoke;
+}
+
+div{
+    background-color: black;
+    padding: 50px;
+    border-style: groove;
+    border-width: 10px;
+    border-color: rgb(8, 83, 13);
+    margin: 200px;
+    border-radius: 60px;
+}
