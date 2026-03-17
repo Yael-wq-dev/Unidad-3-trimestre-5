@@ -1,35 +1,35 @@
 body {
-    background-color: rgb(39, 61, 0);
+    background-color: rgb(99, 7, 7);
     color: black;
     font-size: 50px;
+    font-style: oblique;
 }
 
 h1{
-    color: grey;
+    color: rgb(255, 255, 255);
 }
 
 p{
-    color: azure;
+    color: rgb(255, 255, 255);
 }
 
 div{
-    background-color: black;
+    background-color: rgb(0, 0, 0);
     padding: 50px;
-    border-style: dotted;
-    border-width: 10px;
-    border-color: cadetblue;
+    border-style:dotted;
+    border-width: 25px;
     margin: 150px;
     border-radius: 20px;
 }
 
 img {
-  border-radius: 50px;
+  border-radius: 10px;
 }
 
 .fotos {
 
     background-color: blue;
-    border-style: none;
+    border-style:initial;
     margin: 0px;
     padding: 0px;
     display: flex;
