@@ -1,0 +1,49 @@
+body{
+    background-color: black;
+}
+header{
+background-color: #a1f924;
+}
+nav{
+background-color:#ffffff;
+}
+div{
+background-color: #a1f924;
+}
+footer{
+    background-color: #ffffff;
+}
+
+/* Style all font awesome icons */
+.fa {
+  padding: 20px;
+  font-size: 30px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Add a hover effect if you want */
+.fa:hover {
+  opacity: 0.7;
+}
+
+/* Set a specific color for each brand */
+
+/* Facebook */
+.fa-facebook {
+  background: #a1f924;
+  color: rgb(176, 0, 0);
+}
+
+/* Twitter */
+.fa-twitter {
+  background: #a1f924;
+  color: rgb(176, 0, 0);
+}
+
+/*Instagram*/
+.fa-instagram {
+  background: #000000;
+  color: #264100;
+}
